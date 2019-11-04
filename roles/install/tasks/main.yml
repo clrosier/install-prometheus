@@ -1,2 +1,2 @@
 ---
-# tasks file for install
+- include_tasks: install.yml

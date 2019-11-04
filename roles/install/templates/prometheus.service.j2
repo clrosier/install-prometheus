@@ -1,0 +1,19 @@
+[Unit]
+Description=Prometheus Server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ prometheus_user }}
+Group={{ prometheus_user }}
+Type=simple
+ExecStart={{ base_dir }}/current/prometheus \
+    --config.file {{ base_dir }}/current/prometheus.yml \
+    --storage.tsdb.path /srv/data/prometheus \
+    --storage.tsdb.retention={{ data_retention_period ]} \
+    --web.console.templates=/etc/prometheus/consoles \
+    --web.console.libraries=/etc/prometheus/console_libraries \
+    --web.enable-lifecycle
+
+[Install]
+WantedBy=multi-user.target

@@ -1,2 +1,12 @@
 ---
-# handlers file for install
+- name: restart
+  systemd:
+    name: prometheus
+    daemon-reload: "yes"
+    state: restarted
+    enabled: "yes"
+
+- name: reload
+  uri:
+    url: "{{ reload_url }}"
+    method: "POST"

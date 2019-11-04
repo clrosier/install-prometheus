@@ -3,3 +3,5 @@
   hosts: all
   roles:
     - role: install
+  vars_files:
+    - runtime.yml

@@ -1,2 +1,22 @@
 ---
-# vars file for install
+# Change the version here for an upgrade or downgrade
+prometheus_version: "2.13.0"
+
+# User running prometheus
+prometheus_user: "prometheus"
+
+# Base url
+base_url: "http://localhost:9090"
+
+base_dir: "/opt/prometheus"
+data_dir: "/srv/data/prometheus"
+console_dir: "/etc/prometheus/consoles"
+console_lib_dir: "/etc/prometheus/console_libraries"
+
+master_cfg_url: "http://github.com/raw/clrosier/prometheus-config/master/prometheus.yml"  # yamllint disable-line rule:line-length
+branch_cfg_url: "http://github.com/raw/clrosier/prometheus-config/{{ branch }}/prometheus.yml"  # yamllint disable-line rule:line-length
+
+reload_url: "{{ base_url }}/-/reload"
+
+download_url: ""
+data_retention_period: "30d"

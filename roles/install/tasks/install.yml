@@ -1,0 +1,78 @@
+---
+- name: install | create service account
+  user:
+    name: "{{ prometheus_user }}"
+
+- name: install | ensure base folder structure
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_user }}"
+    mode: 0744
+  loop:
+    - "{{ base_dir }}"
+    - "{{ data_dir }}"
+    - "{{ console_dir }}"
+    - "{{ console_lib_dir }}"
+    - "{{ base_dir }}/releases"
+
+- name: install | create systemd file
+  template:
+    src: prometheus.service.j2
+    dest: "/etc/systemd/system/prometheus.service"
+    owner: root
+    group: "{{ prometheus_user }}"
+  no_log: "no"
+  notify: restart
+
+- name: install | register prometheus path to stat
+  stat:
+    path: "{{ base_dir }}/releases/prometheus-{{ prometheus_version }}"
+  register: prom_path
+
+- name: install | get prometheus binary
+  unarchive:
+    src: "{{ download_url }}"
+    dest: "{{ base_dir }}/releases"
+    remote_src: "yes"
+  when: not prom_path.stat.exists
+
+- name: install | rename folder for simplicity
+  command: "mv {{ base_dir }}/releases/prometheus-{{ prometheus_version }}.linux-amd64 {{ base_dir }}/releases/prometheus-{{ prometheus_version }}"
+  when: not prom_path.stat.exists
+  tags:
+    - skip_ansible_lint
+
+- name: install | ensure permissioning on folder
+  file:
+    path: "{{ base_dir }}/releases"
+    state: directory
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_user }}"
+    recurse: "yes"
+
+- name: install | create current symlink
+  file:
+    src: "{{ base_dir }}/releases/prometheus-{{ prometheus_version }}"
+    dest: "{{ base_dir }}/current"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_user }}"
+    state: link
+  notify: restart
+
+- name: install | get configurations
+  get_url:
+    url: "{{ master_cfg_url }}"
+    dest: "{{ base_dir }}/current/prometheus.yml"
+    force: "yes"
+  when: branch is not defined
+  notify: reload
+
+- name: install | get configurations
+  get_url:
+    url: "{{ master_cfg_url }}"
+    dest: "{{ base_dir }}/current/prometheus.yml"
+    force: "yes"
+  when: branch is defined
+  notify: reload
