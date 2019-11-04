@@ -1,0 +1,2 @@
+roles/install/molecule/default/pytestdebug.log
+roles/install/molecule/default/tests/__pycache__/

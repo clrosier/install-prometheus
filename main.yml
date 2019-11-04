@@ -1,0 +1,7 @@
+---
+- name: Install-Prometheus | Install
+  become: "yes"
+  hosts: all
+
+roles:
+  - role: install
