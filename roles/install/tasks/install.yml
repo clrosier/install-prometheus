@@ -37,6 +37,7 @@
     dest: "{{ base_dir }}/releases"
     remote_src: "yes"
   when: not prom_path.stat.exists
+  notify: restart
 
 - name: install | rename folder for simplicity
   command: "mv {{ base_dir }}/releases/prometheus-{{ prometheus_version }}.linux-amd64 {{ base_dir }}/releases/prometheus-{{ prometheus_version }}"
