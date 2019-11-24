@@ -10,7 +10,7 @@ Type=simple
 ExecStart={{ base_dir }}/current/prometheus \
     --config.file {{ base_dir }}/current/prometheus.yml \
     --storage.tsdb.path /srv/data/prometheus \
-    --storage.tsdb.retention={{ data_retention_period ]} \
+    --storage.tsdb.retention={{ data_retention_period }} \
     --web.console.templates=/etc/prometheus/consoles \
     --web.console.libraries=/etc/prometheus/console_libraries \
     --web.enable-lifecycle
