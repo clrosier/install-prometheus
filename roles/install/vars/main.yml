@@ -1,6 +1,6 @@
 ---
 # Change the version here for an upgrade or downgrade
-prometheus_version: "2.13.0"
+prometheus_version: "2.14.0"
 
 # User running prometheus
 prometheus_user: "prometheus"
@@ -18,5 +18,5 @@ branch_cfg_url: "http://github.com/raw/clrosier/prometheus-config/{{ branch }}/p
 
 reload_url: "{{ base_url }}/-/reload"
 
-download_url: ""
+download_url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
 data_retention_period: "30d"
