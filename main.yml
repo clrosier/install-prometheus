@@ -3,5 +3,5 @@
   become: "yes"
   hosts: all
 
-roles:
-  - install
+  roles:
+    - install
