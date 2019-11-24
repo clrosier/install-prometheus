@@ -13,8 +13,8 @@ data_dir: "/srv/data/prometheus"
 console_dir: "/etc/prometheus/consoles"
 console_lib_dir: "/etc/prometheus/console_libraries"
 
-master_cfg_url: "http://github.com/raw/clrosier/prometheus-config/master/prometheus.yml"  # yamllint disable-line rule:line-length
-branch_cfg_url: "http://github.com/raw/clrosier/prometheus-config/{{ branch }}/prometheus.yml"  # yamllint disable-line rule:line-length
+master_cfg_url: "https://raw.githubusercontent.com/clrosier/prometheus-config/master/prometheus.yml"  # yamllint disable-line rule:line-length
+branch_cfg_url: "https://raw.githubusercontent.com/clrosier/prometheus-config/{{ branch }}/prometheus.yml"  # yamllint disable-line rule:line-length
 
 reload_url: "{{ base_url }}/-/reload"
 
