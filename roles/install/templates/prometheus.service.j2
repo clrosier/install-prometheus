@@ -1,9 +1,13 @@
+{% raw %}
 [Unit]
+{% endraw %}
 Description=Prometheus Server
 Wants=network-online.target
 After=network-online.target
 
+{% raw %}
 [Service]
+{% endraw %}
 User={{ prometheus_user }}
 Group={{ prometheus_user }}
 Type=simple
@@ -15,5 +19,7 @@ ExecStart={{ base_dir }}/current/prometheus \
     --web.console.libraries=/etc/prometheus/console_libraries \
     --web.enable-lifecycle
 
+{% raw %}
 [Install]
+{% endraw %}
 WantedBy=multi-user.target
